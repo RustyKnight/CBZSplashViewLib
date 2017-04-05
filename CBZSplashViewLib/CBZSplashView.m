@@ -62,10 +62,6 @@
 	if (!_iconAnimation) {
 		CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
 
-//		CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];		fade.fromValue = [NSNumber numberWithFloat:0.0];
-//		fade.toValue = [NSNumber numberWithFloat:1.0];
-//		fade.timingFunction = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
-//				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
 		CAKeyframeAnimation *fade = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
 		fade.values = @[@1.0, @1.0, @0.0];
 		fade.keyTimes = @[@0, @0.8, @1];
@@ -75,18 +71,16 @@
 		fade.removedOnCompletion = NO;
 		fade.fillMode = kCAFillModeForwards;
 
-//		CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-//		scale.values = @[@1, @0.9, @300];
-//		scale.keyTimes = @[@0, @0.4, @1];
-//		scale.duration = self.animationDuration;
-//		scale.removedOnCompletion = NO;
-//		scale.fillMode = kCAFillModeForwards;
-//		scale.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
-//				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+		CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+		scale.values = @[@1, @0.9, @300];
+		scale.keyTimes = @[@0, @0.4, @1];
+		scale.duration = self.animationDuration;
+		scale.removedOnCompletion = NO;
+		scale.fillMode = kCAFillModeForwards;
+		scale.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
 
-		animationGroup.animations = [NSArray arrayWithObjects:fade, nil];
-//		animationGroup.animations = [NSArray arrayWithObjects:scale, fade, nil];
-//		animationGroup.animations = [NSArray arrayWithObjects:fade, nil];
+		animationGroup.animations = [NSArray arrayWithObjects:fade, scale, nil];
 		animationGroup.duration = self.animationDuration;
 
 		_iconAnimation = animationGroup;
