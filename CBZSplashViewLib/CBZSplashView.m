@@ -62,14 +62,18 @@
 	if (!_iconAnimation) {
 		CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
 
-		CAKeyframeAnimation *fade = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-		fade.values = @[@1.0, @1.0, @0.0];
-		fade.keyTimes = @[@0, @0.8, @1];
+//		CAKeyframeAnimation *fade = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+//		fade.values = @[@1.0, @1.0, @0.0];
+//		fade.keyTimes = @[@0, @0.8, @1];
+		CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];		fade.fromValue = [NSNumber numberWithFloat:0.0];
+		fade.toValue = [NSNumber numberWithFloat:1.0];
 		fade.duration = self.animationDuration;
 		fade.removedOnCompletion = NO;
 		fade.fillMode = kCAFillModeForwards;
-		fade.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+		fade.timingFunction = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
 				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+//		fade.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+//				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
 
 //		CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
 //		scale.values = @[@1, @0.9, @300];
