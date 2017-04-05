@@ -15,79 +15,83 @@
 
 #pragma mark - Factory methods
 
-+ (instancetype)splashViewWithIcon:(UIImage *)icon backgroundColor:(UIColor *)backgroundColor
-{
-  /* This component is useless without an icon */
-  NSParameterAssert(icon);
-  
-  return [[CBZRasterSplashView alloc] initWithIconImage:icon backgroundColor:backgroundColor];
++ (instancetype)splashViewWithIcon:(UIImage *)icon backgroundColor:(UIColor *)backgroundColor {
+	/* This component is useless without an icon */
+	NSParameterAssert(icon);
+
+	return [[CBZRasterSplashView alloc] initWithIconImage:icon backgroundColor:backgroundColor];
 }
 
-+ (instancetype)splashViewWithBezierPath:(UIBezierPath *)bezier backgroundColor:(UIColor *)backgroundColor
-{
-  return [[CBZVectorSplashView alloc] initWithBezierPath:bezier backgroundColor:backgroundColor];
++ (instancetype)splashViewWithBezierPath:(UIBezierPath *)bezier backgroundColor:(UIColor *)backgroundColor {
+	return [[CBZVectorSplashView alloc] initWithBezierPath:bezier backgroundColor:backgroundColor];
 }
 
 #pragma mark - Init & Dealloc
 
-- (instancetype)init
-{
-  return [super initWithFrame:[[UIScreen mainScreen] bounds]];
+- (instancetype)init {
+	return [super initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
 #pragma mark - Public methods
 
-- (void)startAnimation
-{
-  [self startAnimationWithCompletionHandler:nil];
+- (void)startAnimation {
+	[self startAnimationWithCompletionHandler:nil];
 }
 
-- (void)startAnimationWithCompletionHandler:(void(^)())completionHandler;
-{
-  NSAssert(NO, @"Override me!");
+- (void)startAnimationWithCompletionHandler:(void (^)())completionHandler; {
+	NSAssert(NO, @"Override me!");
 }
 
 #pragma mark - property getters
 
-- (CGSize)iconStartSize
-{
-  if (!_iconStartSize.height) {
-    _iconStartSize = CGSizeMake(60, 60);
-  }
-  return _iconStartSize;
+- (CGSize)iconStartSize {
+	if (!_iconStartSize.height) {
+		_iconStartSize = CGSizeMake(60, 60);
+	}
+	return _iconStartSize;
 }
 
-- (CGFloat)animationDuration
-{
-  if (!_animationDuration) {
-    _animationDuration = 1.0f;
-  }
-  return _animationDuration;
+- (CGFloat)animationDuration {
+	if (!_animationDuration) {
+		_animationDuration = 1.0f;
+	}
+	return _animationDuration;
 }
 
-- (CAAnimation *)iconAnimation
-{
-  if (!_iconAnimation) {
-    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-    animation.values = @[@1, @0.9, @300];
-    animation.keyTimes = @[@0, @0.4, @1];
-    animation.duration = self.animationDuration;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
-                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
-    
-    _iconAnimation = animation;
-  }
-  return _iconAnimation;
+- (CAAnimationGroup *)iconAnimation {
+	if (!_iconAnimation) {
+		CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+
+		CAKeyframeAnimation *fade = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+		fade.values = @[@1.0, @1.0, @0.0];
+		fade.keyTimes = @[@0, @0.8, @1];
+		fade.duration = self.animationDuration;
+		fade.removedOnCompletion = NO;
+		fade.fillMode = kCAFillModeForwards;
+		fade.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+
+		CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+		scale.values = @[@1, @0.9, @300];
+		scale.keyTimes = @[@0, @0.4, @1];
+		scale.duration = self.animationDuration;
+		scale.removedOnCompletion = NO;
+		scale.fillMode = kCAFillModeForwards;
+		scale.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
+				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+
+		animationGroup.animations = [NSArray arrayWithObjects:scale, fade, nil];
+
+		_iconAnimation = animationGroup;
+	}
+	return _iconAnimation;
 }
 
-- (UIColor *)iconColor
-{
-  if (!_iconColor) {
-    _iconColor = [UIColor whiteColor];
-  }
-  return _iconColor;
+- (UIColor *)iconColor {
+	if (!_iconColor) {
+		_iconColor = [UIColor whiteColor];
+	}
+	return _iconColor;
 }
 
 @end

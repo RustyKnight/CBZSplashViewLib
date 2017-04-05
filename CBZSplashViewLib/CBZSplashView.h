@@ -53,7 +53,7 @@
 /**
  *  The animation applied to the icon
  */
-@property (nonatomic, strong) CAAnimation *iconAnimation;
+@property (nonatomic, strong) CAAnimationGroup *iconAnimation;
 
 /**
  *  the color of the icon
