@@ -80,7 +80,8 @@
 //		scale.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
 //				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
 
-		animationGroup.animations = [NSArray arrayWithObjects:scale, fade, nil];
+//		animationGroup.animations = [NSArray arrayWithObjects:scale, fade, nil];
+		animationGroup.animations = [NSArray arrayWithObjects:fade, nil];
 
 		_iconAnimation = animationGroup;
 	}
