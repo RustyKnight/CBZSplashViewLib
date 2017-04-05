@@ -83,6 +83,7 @@
 		animationGroup.animations = [NSArray arrayWithObjects:fade, scale, nil];
 		animationGroup.duration = self.animationDuration;
 		animationGroup.removedOnCompletion = NO;
+		animationGroup.fillMode = kCAFillModeForwards;
 
 		_iconAnimation = animationGroup;
 	}
