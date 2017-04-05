@@ -64,7 +64,7 @@
 
 		CAKeyframeAnimation *fade = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
 		fade.values = @[@1.0, @0.0];
-		fade.keyTimes = @[@0, @1];
+		fade.keyTimes = @[@0.5, @1];
 		fade.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
 				[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
 		fade.duration = self.animationDuration;
